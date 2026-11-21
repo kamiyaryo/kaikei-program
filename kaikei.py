@@ -12,7 +12,11 @@ sale_list = []
 print(f'0: 入力終了')
 
 while True:
-    number = int(input('プラン番号を入力してください: '))
+    try:
+        number = int(input('プラン番号を入力してください: '))
+    except ValueError:
+        print('数字を入力してください')
+        continue
     if number == 0:
         break
     if number not in menu:
@@ -20,7 +24,16 @@ while True:
         continue
     name,price = menu[number]
     print(f'選択: {name} ({price:,}円)')
-    count = int(input('契約件数を入力してください: '))
+
+    while True:
+        try:
+            count = int(input('契約件数を入力してください: '))
+            if count <= 0:
+                print('契約件数は1以上で入力してください')
+                continue
+            break
+        except ValueError:
+            print('数字を入力してください')
     subtotal = price * count
     lines = f'{name} {price:,}円　x　{count}件 = {subtotal:,}円 '
     print(lines)
